@@ -4,8 +4,8 @@ const app = express();
 const socketIO = require('socket.io');
 const { v4: uuidv4 } = require('uuid');
 
-const port = process.env.PORT || 8080;
-const env = process.env.NODE_ENV || 'development';
+const port = 8080;
+const env = 'development';
 
 // Redirect to https
 app.get('*', (req, res, next) => {
