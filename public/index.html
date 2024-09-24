@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Chat Room</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Join Video Chat Room</h1>
+    <input type="text" id="roomID" placeholder="Enter Room ID">
+    <button id="joinButton">Join Room</button>
+
+    <script>
+        document.getElementById('joinButton').onclick = function() {
+            const roomID = document.getElementById('roomID').value;
+            if (roomID) {
+                window.location.href = `broadcaster.html?room=${roomID}`;
+            }
+        };
+    </script>
+</body>
+</html>
