@@ -124,10 +124,8 @@ webrtc.addEventListener("newUser", (e) => {
   const socketId = e.detail.socketId;
   const stream = e.detail.stream;
 
-  // Add audio track to stream
-  stream.getAudioTracks().forEach((track) => {
-    stream.addTrack(track);
-  });
+  // Add audio stream to peer connection
+  webrtc.addStream(stream);
 
   const videoContainer = document.createElement("div");
   videoContainer.setAttribute("class", "grid-item");
@@ -274,10 +272,16 @@ if (roomIdFromUrl) {
 
 // Обновляем URL при создании или присоединении к комнате
 webrtc.addEventListener("createdRoom", (e) => {
-  const roomId = e.detail.roomId;
-  console.log("Created room:", roomId);
-  window.location.href = `index.html?room=${roomID}`;
-  setTitle("created", e);
+  const room = e.detail.roomId;
+
+  console.log(`Room ${room} was created`);
+
+  notify(`Room ${room} was created`);
+  document.querySelector("h1").textContent = `Room: ${room}`;
+  webrtc.gotStream();
+
+  // Send audio stream when creating peer connection
+  webrtc.sendAudioStream();
 });
 
 webrtc.addEventListener("joinedRoom", (e) => {
