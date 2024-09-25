@@ -100,7 +100,7 @@ webrtc.addEventListener("leftRoom", (e) => {
  * Get local media
  */
 webrtc
-  .getLocalStream(true, { width: 640, height: 480 })
+  .getLocalStream(true, { width: 640, height: 480, audio: true })
   .then((stream) => (localVideo.srcObject = stream))
   .catch((error) => {
     console.error("Can't get usermedia", error);
