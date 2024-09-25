@@ -130,7 +130,7 @@ webrtc.addEventListener("newUser", (e) => {
 
   const video = document.createElement("video");
   video.setAttribute("autoplay", true);
-  video.setAttribute("muted", true); // set to false
+  video.setAttribute("muted", false); // set to false
   video.setAttribute("playsinline", true);
   video.srcObject = stream;
 
