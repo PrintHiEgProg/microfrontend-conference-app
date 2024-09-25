@@ -124,13 +124,18 @@ webrtc.addEventListener("newUser", (e) => {
   const socketId = e.detail.socketId;
   const stream = e.detail.stream;
 
+  // Add audio track to stream
+  stream.getAudioTracks().forEach((track) => {
+    stream.addTrack(track);
+  });
+
   const videoContainer = document.createElement("div");
   videoContainer.setAttribute("class", "grid-item");
   videoContainer.setAttribute("id", socketId);
 
   const video = document.createElement("video");
   video.setAttribute("autoplay", true);
-  video.setAttribute("muted", false); // set to false
+  video.setAttribute("muted", false); // Set to false to hear audio
   video.setAttribute("playsinline", true);
   video.srcObject = stream;
 
