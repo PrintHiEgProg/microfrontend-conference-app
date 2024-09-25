@@ -72,28 +72,27 @@ io.sockets.on('connection', function (socket) {
     /**
      * When room gets created or someone joins it
      */
-    socket.on('create or join', (room) => {
-        log('Create or Join room: ' + room);
+    socket.on("create or join", (room) => {
+      log("Create or Join room: " + room);
 
-        // Get number of clients in the room
-        const clientsInRoom = io.sockets.adapter.rooms.get(room);
-        let numClients = clientsInRoom ? clientsInRoom.size : 0;
+      // Get number of clients in the room
+      const clientsInRoom = io.sockets.adapter.rooms.get(room);
+      let numClients = clientsInRoom ? clientsInRoom.size : 0;
 
-        if (numClients === 0) {
-            // Create room
-            const roomId = uuidv4(); // Генерация уникального ID для комнаты
-            socket.join(roomId);
-            roomAdmin = socket.id;
-            socket.emit('created', roomId, socket.id);
-        } else {
-            log('Client ' + socket.id + ' joined room ' + room);
+      if (numClients === 0) {
+        // Create room
+        socket.join(room);
+        roomAdmin = socket.id;
+        socket.emit("created", room, socket.id);
+      } else {
+        log("Client " + socket.id + " joined room " + room);
 
-            // Join room
-            io.sockets.in(room).emit('join', room); // Notify users in room
-            socket.join(room);
-            io.to(socket.id).emit('joined', room, socket.id); // Notify client that they joined a room
-            io.sockets.in(room).emit('ready', socket.id); // Room is ready for creating connections
-        }
+        // Join room
+        io.sockets.in(room).emit("join", room); // Notify users in room
+        socket.join(room);
+        io.to(socket.id).emit("joined", room, socket.id); // Notify client that they joined a room
+        io.sockets.in(room).emit("ready", socket.id); // Room is ready for creating connections
+      }
     });
 
     /**
