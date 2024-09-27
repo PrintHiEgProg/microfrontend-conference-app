@@ -7,17 +7,17 @@
     </head>
 
     <body>
-        <h1></h1>
+        
+        <h1 id="id-h1" style="display: none;"></h1>
+        <label for="roomId" style="display: none;">Room ID</label>
+        <input id="roomId" type="text" style="display: none;" />
+        <button id="joinBtn" style="display: none;">Join</button>
+        <button id="leaveBtn" style="display: none;">Leave</button>
 
-        <label for="roomId">Room ID</label>
-        <input id="roomId" type="text" />
-        <button id="joinBtn">Join</button>
-        <button id="leaveBtn">Leave</button>
-
-        <p id="notification"></p>
+        <p id="notification" style="display: none;"></p>
 
         <div id="localVideo-container">
-            <video autoplay playsinline muted></video>
+            <video class="localVideo" autoplay playsinline muted></video>
         </div>
 
         <div id="videos">

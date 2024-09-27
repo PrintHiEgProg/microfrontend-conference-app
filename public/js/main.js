@@ -73,7 +73,7 @@ const setTitle = (status, e) => {
 
   // Запрос доступа к камере и микрофону после присоединения к комнате
   webrtc
-    .getLocalStream(true, { width: 640, height: 480, audio: true })
+    .getLocalStream(true, { width: 640, height: 480 })
     .then((stream) => (localVideo.srcObject = stream))
     .catch((error) => {
       console.error("Can't get usermedia", error);
@@ -124,8 +124,10 @@ webrtc.addEventListener("newUser", (e) => {
   const socketId = e.detail.socketId;
   const stream = e.detail.stream;
 
-  // Add audio stream to peer connection
-  webrtc.addStream(stream);
+  // Add audio track to stream
+  stream.getAudioTracks().forEach((track) => {
+    stream.addTrack(track);
+  });
 
   const videoContainer = document.createElement("div");
   videoContainer.setAttribute("class", "grid-item");
@@ -263,30 +265,24 @@ const urlParams = new URLSearchParams(window.location.search);
 const roomIdFromUrl = urlParams.get("room");
 
 if (roomIdFromUrl) {
-    // Если ID комнаты есть в URL, автоматически присоединяемся к комнате
-    webrtc.joinRoom(roomIdFromUrl);
+  // Если ID комнаты есть в URL, автоматически присоединяемся к комнате
+  webrtc.joinRoom(roomIdFromUrl);
 } else {
-    // Если ID комнаты нет в URL, создаем новую комнату
-    webrtc.joinRoom("");
+  // Если ID комнаты нет в URL, создаем новую комнату
+  webrtc.joinRoom("");
 }
 
 // Обновляем URL при создании или присоединении к комнате
 webrtc.addEventListener("createdRoom", (e) => {
-  const room = e.detail.roomId;
-
-  console.log(`Room ${room} was created`);
-
-  notify(`Room ${room} was created`);
-  document.querySelector("h1").textContent = `Room: ${room}`;
-  webrtc.gotStream();
-
-  // Send audio stream when creating peer connection
-  webrtc.sendAudioStream();
+  const roomId = e.detail.roomId;
+  console.log("Created room:", roomId);
+  window.location.href = `index.html?room=${roomID}`;
+  setTitle("created", e);
 });
 
 webrtc.addEventListener("joinedRoom", (e) => {
   const roomId = e.detail.roomId;
   console.log("Joined room:", roomId);
-    window.location.href = `index.html?room=${roomID}`;
+  window.location.href = `index.html?room=${roomID}`;
   setTitle("joined", e);
 });

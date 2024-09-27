@@ -1,0 +1,34 @@
+#localVideo-container {
+    position: absolute;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+.localVideo {
+    position: absolute;
+    top: 0;
+   width: 100vw;
+    height: 100vh;
+}
+
+.grid-container {
+    position: absolute;
+    top: 0;
+   width: 100vw;
+    height: 100vh;
+}
+
+#videoGrid {
+    position: absolute;
+    top: 0;
+   width: 100vw;
+    height: 100vh;
+}
+
+#videos {
+    position: absolute;
+    top: 0;
+   width: 100vw;
+    height: 100vh;
+}
